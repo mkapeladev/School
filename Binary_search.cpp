@@ -1,11 +1,13 @@
-﻿#include<iostream>
+#include<iostream>
+#include<chrono>
 using namespace std;
 int main()
 {
+    auto pocz = chrono::high_resolution_clock::now();
     short i, numer, prawa, lewa, sr;
     short arr[15] = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47 };
     cout << "Podaj numer:" << endl;
-   cin >> numer;
+    cin >> numer;
     prawa = 0;
     lewa = 15;
     sr = (prawa + lewa) / 2;
@@ -24,5 +26,8 @@ int main()
     }
     if (prawa > lewa)
         cout << "\n Numerka:  " << numer << "Nie ma na liście";
+    auto koniec = chrono::high_resolution_clock::now();
+    chrono::duration<double> trwanie = koniec - pocz;
+    cout << "\n Czas wykonania program to : " << trwanie.count() << " s\n";
     return 0;
 }
