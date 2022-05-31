@@ -1,39 +1,57 @@
-﻿#include <iostream>
+#include <iostream>
+#include <chrono>
 using namespace std;
-
+void zwrooccos(short klucz, char tab[])
+{
+    short dl = strlen(tab);
+    if (!(klucz >= -26 and klucz <= 26))
+    {
+        cout << "Zły klucz" << endl;
+        return;
+    }
+    if (klucz >= 0)
+    {
+        for (int i = 0; i < dl; i++)
+        {
+            if (tab[i] + klucz <= 'z')
+            {
+                tab[i] += klucz;
+            }
+            else
+            {
+                tab[i] += klucz - 26;
+            }
+        }
+    }
+    else
+    {
+        for (int i = 0; i < dl; i++)
+        {
+            if (tab[i] + klucz >= 'a')
+            {
+                tab[i] += klucz;
+            }
+            else
+            {
+                tab[i] += klucz + 26;
+            }
+        }
+    }
+}
 int main()
 {
-	string prim;
-	short key , lenght , choice ;
-	cout << "Podaj wiadomość do zaszyfrowania" << endl;
-	char message[50], meslen;
-	cin >> message; // Wiadomość do szyfrowania
-	//cout << message;
-	prim = message;
-	cout << "Podaj Klucz do szyfrowania" << endl;
-	cin >> key; // ilość liter do przeskoczenia do szyfru
-	lenght = strlen(message); // wiadomość  >> liczba znaków 
-	cout << "1.Szyfrowanie"<< endl;
-	cin >> choice;
-	if (choice == 1)
-		for (short i = 0; message[i] != '0'; i++)
-		{
-			meslen = message[i];
-			//cout << message[i];
-			if ( meslen <= 'z' && meslen >= 'a')
-			{
-				meslen = meslen + key;
-				if (meslen > 'z')
-				{
-					meslen = meslen - 'z' + 'a' - 1;
-				}
-				message[i] = meslen;
-				
-			}
+    auto pocz = chrono::high_resolution_clock::now();
+    short klucz;
+    char tab[300];
 
-		}
-		
 
-	cout << "Po zaszyfrowaniu: " << message << endl;
-	cout << "Po odszyfrowaniu: " << prim;
+    cout << "Podaj wyraz do zaszyfrowania: " << endl;
+    cin >> tab;
+    cout << "P0daj Klucz: " << endl;
+    cin >> klucz;
+    zwrooccos(klucz, tab);
+    cout << "Wyraz po zaszyfrowaniu to:" << tab << endl;
+    auto koniec = chrono::high_resolution_clock::now();
+    chrono::duration<double> trwanie = koniec - pocz;
+    cout << "\n Czas wykonania program to : " << trwanie.count() << " s\n";
 }
