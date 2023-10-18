@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blank Page</title>
+  </head>
+  <body>
+    <p type="text" id="abc" onclick="f1()">eleme</p>
+    <input type="text" id="liczba" />
+    <input type="button" value="Oblicz" onclick="f2()" />
+    <h1 id="a">KWarat liczby</h1>
+    <h1 id="ej" onmousemove="f5()" onmouseout="f6()">hej</h1>
+    <img
+      id="im"
+      src="1.jpg"
+      width="50%"
+      onmousemove="f10()"
+      onmouseout="document.getElementById('im').src = '1.jpg'"
+    />
+    <script>
+      function f1() {
+        element = document.getElementById("abc");
+        element.innerHTML = "akapit new";
+      }
+      function f5() {
+        element = document.getElementById("ej");
+        element.innerHTML = "elooo";
+      }
+      function f6() {
+        element = document.getElementById("ej");
+        element.innerHTML = "dziala";
+      }
+      function f2() {
+        liczba = document.getElementById("liczba").value;
+
+        kwadrat = liczba * liczba;
+        wartosc = document.getElementById("a");
+        wartosc.innerHTML = "kwadrat to " + kwadrat;
+      }
+      function f10() {
+        document.getElementById("im").src = "2.jpg";
+      }
+    </script>
+  </body>
+</html>

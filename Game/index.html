@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const renderer = new THREE.WebGLRenderer();
+
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      const geometry = new THREE.SphereGeometry(1, 32, 32);
+      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      const sphere = new THREE.Mesh(geometry, material);
+
+      scene.add(sphere);
+
+      camera.position.z = 5;
+
+      const raycaster = new THREE.Raycaster();
+      const mouse = new THREE.Vector2();
+
+      const bullets = [];
+
+      document.addEventListener("click", (event) => {
+        // Create a bullet object and add it to the scene
+        const bulletGeometry = new THREE.SphereGeometry(0.05, 8, 8);
+        const bulletMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+        const bullet = new THREE.Mesh(bulletGeometry, bulletMaterial);
+        bullet.position.copy(sphere.position);
+
+        // Get the direction to shoot based on the mouse click position
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        raycaster.setFromCamera(mouse, camera);
+        const direction = new THREE.Vector3();
+        raycaster.ray.direction.copy(direction);
+        bullet.userData.direction = direction;
+
+        bullets.push(bullet);
+        scene.add(bullet);
+      });
+
+      const animate = () => {
+        requestAnimationFrame(animate);
+
+        // Move bullets and remove them when they are too far
+        bullets.forEach((bullet) => {
+          bullet.position.add(bullet.userData.direction.multiplyScalar(0.2));
+          if (bullet.position.distanceTo(sphere.position) > 10) {
+            scene.remove(bullet);
+          }
+        });
+
+        renderer.render(scene, camera);
+      };
+
+      animate();
+    </script>
+  </body>
+</html>
