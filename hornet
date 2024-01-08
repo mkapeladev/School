@@ -1,0 +1,25 @@
+def horner(wsp, st, x):
+    if st == 0:
+        return wsp[0]
+    else:
+        return x * horner(wsp, st - 1, x) + wsp[st]
+
+def m():
+    st = int(input("Podaj stopien wielomianu: "))
+
+    wsp = [0] * (st + 1)
+
+    
+    for i in range(st + 1):
+        wsp[i] = int(input(f"Podaj wspolczynnik stojacy przy potedze {st - i}: "))
+
+    x = int(input("Podaj argument: "))
+
+    result = horner(wsp, st, x)
+
+    print(f"W({x}) = {result}")
+
+    del wsp
+
+if True:
+    m()
